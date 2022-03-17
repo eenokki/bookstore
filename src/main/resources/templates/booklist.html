@@ -5,6 +5,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
+<div class="container">
+	<div class="col-md-4">
+		<h1>Students</h1>
+	</div>
+	<div class="col-md-4">
+		<h3 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]</h3>
+	</div>
+	<div class="col-md-4" style="padding:20px 0">
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out"/>
+		</form>
+	</div>
 	<table class="table table-striped">
 		<tr>
 			<th>Author</th>
@@ -20,10 +32,12 @@
 			<td th:text="${book.year}">Year</td>
 			<td th:text="${book.category.categoryName}">Category</td>
 
-			<td><a th:href="@{/delete/{id}(id=${book.id})}">Delete</a></td>
+			<td sec:authorize="hasRole('ADMIN')">
+			<a th:href="@{/delete/{id}(id=${book.id})}">Delete</a></td>
 			<td><a th:href="@{/edit/{id}(id=${book.id})}">Edit</a></td>
 		</tr>
 	</table>
 	<a href="/add" class="btn btn-primary">Add book</a>
+</div>
 </body>
 </html>
