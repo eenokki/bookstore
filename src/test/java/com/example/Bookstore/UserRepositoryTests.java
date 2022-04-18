@@ -5,6 +5,8 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -21,10 +23,8 @@ public class UserRepositoryTests {
 
     @Test
     public void findByemailShouldReturnUser() {
-        List<User> users = repository.findByEmail("user@user.com");
-        
-        assertThat(users).hasSize(1);
-        assertThat(users.get(0).getUsername()).isEqualTo("user");
+        User users = repository.findByUsername("user");
+        assertThat(users.getUsername()).isEqualTo("user");
     }
     
     @Test
@@ -37,12 +37,11 @@ public class UserRepositoryTests {
     }    
     
     public void deleteUser() {
-		List<User> users = repository.findByUsernamelist("user");
-		User user = users.get(0);
+    	 User user = repository.findByUsername("user");
 		repository.delete(user);
 		
-		List<User> newUser = repository.findByUsernamelist("user");
-		assertThat(newUser).hasSize(0);
+		 User newUser = repository.findByUsername("user");
+		assertThat(newUser).isEqualTo("null");
      }
 
 }
